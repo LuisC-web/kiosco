@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import { toast } from 'react-toastify';
 const { createContext, useState, useEffect } = require('react');
 const QuioscoContex = createContext();
 const QuioscoProvider = ({ children }) => {
@@ -7,6 +7,7 @@ const QuioscoProvider = ({ children }) => {
   const [categoriaActual, setCategoriaActual] = useState({});
   const [producto, setProducto] = useState({});
   const [modal, setModal] = useState(false);
+  const [pedido, setPedido] = useState([]);
   const getCategoria = async () => {
     const url = '/api/categoria';
     const { data } = await axios(url);
@@ -26,6 +27,21 @@ const QuioscoProvider = ({ children }) => {
   const hadleModal = () => {
     setModal(!modal);
   };
+  const hadlePedido = ({ categoriaId, imagen, ...producto }) => {
+    if (
+      pedido.some((productoRecorrido) => productoRecorrido.id === producto.id)
+    ) {
+      const pedidoActualizado = pedido.map((pedidoRecorrido) =>
+        pedidoRecorrido.id == producto.id ? producto : pedidoRecorrido
+      );
+      setPedido(pedidoActualizado);
+      toast.info('Cambios guardados');
+      return;
+    } else {
+      setPedido([...pedido, producto]);
+      toast.success('Agregado');
+    }
+  };
 
   return (
     <QuioscoContex.Provider
@@ -34,7 +50,11 @@ const QuioscoProvider = ({ children }) => {
         categoriaActual,
         hadleCategoriaActual,
         hadleProducto,
+        producto,
+        modal,
         hadleModal,
+        hadlePedido,
+        pedido,
       }}
     >
       {children}

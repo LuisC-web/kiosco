@@ -1,7 +1,26 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Modal from 'react-modal';
 import Head from 'next/head';
-
 import SideBar from '../components/SideBar';
+import useKiosco from '../helpers/useKiosco';
+import ModalProducto from '../components/ModalProducto';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+  },
+};
+
+Modal.setAppElement('#__next');
 const Layout = ({ children, pagina }) => {
+  const { modal } = useKiosco();
   return (
     <>
       <Head>
@@ -16,6 +35,12 @@ const Layout = ({ children, pagina }) => {
           <div className="mt-5">{children}</div>
         </main>
       </div>
+      {modal && (
+        <Modal isOpen={modal} style={customStyles}>
+          <ModalProducto></ModalProducto>
+        </Modal>
+      )}
+      <ToastContainer></ToastContainer>
     </>
   );
 };

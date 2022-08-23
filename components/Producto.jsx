@@ -4,7 +4,7 @@ import { format } from '../helpers/format';
 import useKiosco from '../helpers/useKiosco';
 const Producto = ({ producto }) => {
   const { nombre, precio, imagen } = producto;
-  const { hadleProducto } = useKiosco();
+  const { hadleProducto, hadleModal } = useKiosco();
   return (
     <>
       <div className="border">
@@ -21,7 +21,10 @@ const Producto = ({ producto }) => {
           </p>
           <button
             className="w-full mt-2 bg-indigo-500 hover:bg-indigo-400 p-2 text-white rounded-md"
-            onClick={() => hadleProducto(producto)}
+            onClick={() => {
+              hadleProducto(producto);
+              hadleModal();
+            }}
           >
             Añadir
           </button>
