@@ -35,6 +35,8 @@ const QuioscoProvider = ({ children }) => {
         hadleCategoriaActual,
         hadleProducto,
         hadleModal,
+        modal,
+        producto,
       }}
     >
       {children}

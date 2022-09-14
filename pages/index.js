@@ -1,6 +1,8 @@
 import useKiosco from '../helpers/useKiosco';
 import Layout from '../layout/Layout';
 import Producto from '../components/Producto';
+
+
 export default function Home() {
   const { categoriaActual } = useKiosco();
   return (
